@@ -36,7 +36,7 @@ Attributes
 
 See attributes/default.rb for the install flavour:
 
-    default['elPrep']['version'] =  'v2.35'
+    default['elPrep']['version'] =  '2.35'
     
     
 License and Authors
