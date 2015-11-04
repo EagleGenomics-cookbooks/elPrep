@@ -36,7 +36,7 @@ end
 
 # this symlinks every executable in the install subdirectory to the top of the directory tree
 # so that they are in the PATH
-execute "find #{node['elPrep']['dir']} -maxdepth 1 -name 'elprep*' -executable -type f -exec ln -s {} . \\;" do
+execute "find #{node['elPrep']['dir']} -maxdepth 1 -name 'elprep*' -executable -type f -exec ln -sf {} . \\;" do
   cwd node['elPrep']['bin_path']
 end
 
