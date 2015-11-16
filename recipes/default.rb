@@ -7,6 +7,10 @@
 include_recipe 'build-essential'
 include_recipe 'git'
 
+package ['tar', 'bzip2'] do
+  action :install
+end
+
 ##########################################################
 # here for use by serverspec
 magic_shell_environment 'elPrep_DIR' do
