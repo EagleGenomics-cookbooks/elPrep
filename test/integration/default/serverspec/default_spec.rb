@@ -24,3 +24,7 @@ end
 describe command('which elprep') do
   its(:exit_status) { should eq 0 }
 end
+
+describe command("#{ENV['elPrep_DIR']}/elprep") do
+  its(:stderr) { should contain(ENV['elPrep_VERSION']) }
+end
