@@ -7,7 +7,7 @@
 include_recipe 'build-essential'
 include_recipe 'git'
 
-package ['tar', 'bzip2'] do
+package %w(bzip2 tar) do
   action :install
 end
 
