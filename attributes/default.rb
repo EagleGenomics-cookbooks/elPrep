@@ -1,4 +1,4 @@
-default['elPrep']['version'] = '2.35'
+default['elPrep']['version'] = '2.4'
 default['elPrep']['install_path'] = '/usr/local'
 default['elPrep']['bin_path'] = '/usr/local/bin'
 default['elPrep']['dirname'] = "elprep-v#{node['elPrep']['version']}"
