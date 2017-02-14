@@ -1,6 +1,5 @@
 sudo: required
 dist: trusty
-
 addons:
   apt:
     sources:
@@ -8,31 +7,26 @@ addons:
     packages:
     - chefdk
 install: echo "skip bundle install"
-
 branches:
   only:
   - master
-
 services: docker
-
 env:
   global:
     - RUBYOPT="-W0"
   matrix:
     - CHEF_VERSION=current INSTANCE=default-centos-66
-
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables
     -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
   - chef gem install kitchen-docker
   - "/opt/chefdk/bin/chef exec rake tests"
-
 script:
   - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
 notifications:
   slack:
-    secure: dBB9A1vSypalwZWH2E6FPSg29De1hrYYiCFyUK132/xtElW8nCxqAk8cn5DRnPUC5G3RRXhjyYt7K9sZaCEZCVuEOfe/QhWleMPstkOh1ol20eUhqV/MY04tIoTt8iqGMePvhVVT5N6s2vHB7sL4+0ygyKm32Ry27DQq30HRekIRIckPH/oenwNYVjICVD3kXuvIrmn5pBH9Vwi9b9zDZ6YNnzLwLrT7WaA0XQVNCh6pr5mi7pWM8KmBJyfBY4EsiKK/xF4Y/cIIGJQEHBVWHfmjdde3FM5BtzeiraK5KgEWLLQhn8t8aQ/QktiKRqsRXTpvyxBjB2AQDR18sjKeL4oDVROaJfGb10pOczAgRLMRl1FU5q7E0EBDsPHgLqHXKtuGlk5bs3CpeSjUokT3m8fs2fauqc0xPKbgfhpFsLrel901D1MZW0k4kWWCwqboTk+PwHjAZZQOZrkbJt4c649wJfC3XiGFsBiVhu12CWtj+PUThkZg9ZigaBgTJCykS72dikDRojK4A7NGsksDnbyVxarNBR7bZMl4WFU+tz39Vu8o3tATm7Jx6CgQfBirttMdv2385D1BPsJd42L9yPkU7nnc2vamJYH2U1S6FC18ARe7lQUgkHZYlfwzqJdCU9sRajrTStXOoEBeWEsQYlctYZmNOU+oj5T6dDegcmw=
+    secure: e2GxwjiSBd3H7RsN8FVV69liACr0hgKuY9qO1Rr+6mwlIhIRyCi8R04qWQq7ZhOZj49acaBfazCSSSKPS5cmnCL8CeczdFdou/wIiZ7fcOEoocQkTo0hC7D/ZJgzhF8M4kE4oIlD9kcqKofVEzRa22cDi9CEpq2+dJ0f2I4hqvnA1xXJsnk8TyoWOluewe6RD7MFfZUNwfELrk4cWsh55f2rHx8Oj+Yn0EtBPY1tM8o737io6twwHMMAadImpXpy7u70S1Z3upylZ5A021WU+ZjkEIP13bx6hlray/gwjPpTS+bbv9mvF0Rr28Zij+9d8R6//QGKltuHPkixLCFJfMz/qrXvT3d5aQh8S4GYdL4y1MwLuDVLqriZux9fXTRH9yT8iT0IzEfJpRtRlNLW5H08JhZ/44gLrHAQh/VmBMljr33Zv9Zcx9bqUauHxEN/xt59Kb6ix/4E7Gb+NlDC1bpjbVrgRgxU47kWjT1GqS2Cv+92C+7/LsMi+Ne9+dtWY7ADIz8s2bakrCEIEcRVnG2/laVV3aVFqO/eBewjEFllFuqUf3iyhR1Pl9RKoTy7oZ02vFFY7En0RL+HS/gHDKof40EVxzrwgOdy4mbmOTTHZjEYdKJ7hx20KK/yFd1dGR6J/uyb+M8V6ywdbssKPweEhkr1vGonqEemuSG8kDU=
     on_failure: change
     on_success: change
   email:
