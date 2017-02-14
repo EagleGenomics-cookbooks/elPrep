@@ -1,5 +1,6 @@
 sudo: required
 dist: trusty
+
 addons:
   apt:
     sources:
@@ -7,29 +8,33 @@ addons:
     packages:
     - chefdk
 install: echo "skip bundle install"
+
 branches:
   only:
   - master
+
 services: docker
+
 env:
   global:
-  - RUBYOPT="-W0"
+    - RUBYOPT="-W0"
   matrix:
-  - CHEF_VERSION=current INSTANCE=default-centos-66
+    - CHEF_VERSION=current INSTANCE=default-centos-66
+
 before_script:
-- sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables
-  -N DOCKER )
-- eval "$(/opt/chefdk/bin/chef shell-init bash)"
-- chef gem install kitchen-docker
-- "/opt/chefdk/bin/chef exec rake tests"
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables
+    -N DOCKER )
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - chef gem install kitchen-docker
+  - "/opt/chefdk/bin/chef exec rake tests"
+
 script:
-- KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
+  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
 notifications:
   slack:
-    rooms:
-      secure: dBB9A1vSypalwZWH2E6FPSg29De1hrYYiCFyUK132/xtElW8nCxqAk8cn5DRnPUC5G3RRXhjyYt7K9sZaCEZCVuEOfe/QhWleMPstkOh1ol20eUhqV/MY04tIoTt8iqGMePvhVVT5N6s2vHB7sL4+0ygyKm32Ry27DQq30HRekIRIckPH/oenwNYVjICVD3kXuvIrmn5pBH9Vwi9b9zDZ6YNnzLwLrT7WaA0XQVNCh6pr5mi7pWM8KmBJyfBY4EsiKK/xF4Y/cIIGJQEHBVWHfmjdde3FM5BtzeiraK5KgEWLLQhn8t8aQ/QktiKRqsRXTpvyxBjB2AQDR18sjKeL4oDVROaJfGb10pOczAgRLMRl1FU5q7E0EBDsPHgLqHXKtuGlk5bs3CpeSjUokT3m8fs2fauqc0xPKbgfhpFsLrel901D1MZW0k4kWWCwqboTk+PwHjAZZQOZrkbJt4c649wJfC3XiGFsBiVhu12CWtj+PUThkZg9ZigaBgTJCykS72dikDRojK4A7NGsksDnbyVxarNBR7bZMl4WFU+tz39Vu8o3tATm7Jx6CgQfBirttMdv2385D1BPsJd42L9yPkU7nnc2vamJYH2U1S6FC18ARe7lQUgkHZYlfwzqJdCU9sRajrTStXOoEBeWEsQYlctYZmNOU+oj5T6dDegcmw=
-			on_failure: change
-			on_success: change
-	  email:
-			on_success: change
-			on_failure: always
+    secure: dBB9A1vSypalwZWH2E6FPSg29De1hrYYiCFyUK132/xtElW8nCxqAk8cn5DRnPUC5G3RRXhjyYt7K9sZaCEZCVuEOfe/QhWleMPstkOh1ol20eUhqV/MY04tIoTt8iqGMePvhVVT5N6s2vHB7sL4+0ygyKm32Ry27DQq30HRekIRIckPH/oenwNYVjICVD3kXuvIrmn5pBH9Vwi9b9zDZ6YNnzLwLrT7WaA0XQVNCh6pr5mi7pWM8KmBJyfBY4EsiKK/xF4Y/cIIGJQEHBVWHfmjdde3FM5BtzeiraK5KgEWLLQhn8t8aQ/QktiKRqsRXTpvyxBjB2AQDR18sjKeL4oDVROaJfGb10pOczAgRLMRl1FU5q7E0EBDsPHgLqHXKtuGlk5bs3CpeSjUokT3m8fs2fauqc0xPKbgfhpFsLrel901D1MZW0k4kWWCwqboTk+PwHjAZZQOZrkbJt4c649wJfC3XiGFsBiVhu12CWtj+PUThkZg9ZigaBgTJCykS72dikDRojK4A7NGsksDnbyVxarNBR7bZMl4WFU+tz39Vu8o3tATm7Jx6CgQfBirttMdv2385D1BPsJd42L9yPkU7nnc2vamJYH2U1S6FC18ARe7lQUgkHZYlfwzqJdCU9sRajrTStXOoEBeWEsQYlctYZmNOU+oj5T6dDegcmw=
+    on_failure: change
+    on_success: change
+  email:
+    on_success: change
+    on_failure: always
